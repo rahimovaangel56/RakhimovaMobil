@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="10dp"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="8dp"
+    app:cardUseCompatPadding="true"
+    app:rippleColor="#1E3A8A0F"
+    app:strokeColor="@color/soft_stroke"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical">
+
+        <FrameLayout
+            android:id="@+id/thumbContainer"
+            android:layout_width="92dp"
+            android:layout_height="88dp"
+            android:background="@drawable/bg_car_thumb">
+
+            <ImageView
+                android:id="@+id/carImageView"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_car_placeholder"
+                android:tint="@color/accent_blue" />
+
+            <TextView
+                android:id="@+id/carBrandTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/bg_label_pill"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="6dp"
+                android:textAllCaps="true"
+                android:textColor="@color/accent_blue"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="14dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/carModelTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Model"
+                android:textColor="@color/charcoal"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/carDescriptionTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:text="Description"
+                android:textColor="#4B5563"
+                android:textSize="13sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/carPriceTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2 300 000 ₽"
+                    android:textColor="@color/accent_blue"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/carYearTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/bg_label_pill"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:text="Новый"
+                android:textColor="@color/charcoal"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAddToCart"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="В корзину"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                app:cornerRadius="12dp"
+                app:icon="@drawable/ic_cart"
+                app:iconGravity="textStart"
+                app:iconPadding="10dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
