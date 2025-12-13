@@ -5,6 +5,7 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/loginFragment">
 
+    <!-- Аутентификация -->
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.rakhimovakp.ui.auth.LoginFragment"
@@ -45,16 +46,71 @@
             app:launchSingleTop="true" />
     </fragment>
 
+    <!-- Основные экраны -->
     <fragment
         android:id="@+id/catalogFragment"
         android:name="com.example.rakhimovakp.ui.catalog.CatalogFragment"
         android:label="Каталог"
-        tools:layout="@layout/fragment_catalog" />
+        tools:layout="@layout/fragment_catalog">
+
+        <!-- Действие для оформления заказа -->
+        <action
+            android:id="@+id/action_catalogFragment_to_checkoutFragment"
+            app:destination="@id/checkoutFragment" />
+
+        <!-- Действие в корзину -->
+        <action
+            android:id="@+id/action_catalogFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/cartFragment"
         android:name="com.example.rakhimovakp.ui.catalog.CartFragment"
         android:label="Корзина"
-        tools:layout="@layout/fragment_cart" />
+        tools:layout="@layout/fragment_cart">
+
+        <!-- Действие для оформления заказа из корзины -->
+        <action
+            android:id="@+id/action_cartFragment_to_checkoutFragment"
+            app:destination="@id/checkoutFragment" />
+
+        <!-- Действие назад в каталог -->
+        <action
+            android:id="@+id/action_cartFragment_to_catalogFragment"
+            app:destination="@id/catalogFragment"
+            app:popUpTo="@id/cartFragment"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
+    <!-- Новый фрагмент оформления заказа -->
+    <fragment
+        android:id="@+id/checkoutFragment"
+        android:name="com.example.rakhimovakp.ui.checkout.CheckoutFragment"
+        android:label="Оформление заказа"
+        tools:layout="@layout/fragment_checkout">
+
+        <!-- Аргумент - автомобиль для оформления -->
+        <argument
+            android:name="car"
+            app:argType="com.example.rakhimovakp.data.models.Car" />
+
+        <!-- Действие назад в каталог после оформления -->
+        <action
+            android:id="@+id/action_checkoutFragment_to_catalogFragment"
+            app:destination="@id/catalogFragment"
+            app:popUpTo="@id/catalogFragment"
+            app:popUpToInclusive="false" />
+
+        <!-- Действие назад в корзину после оформления -->
+        <action
+            android:id="@+id/action_checkoutFragment_to_cartFragment"
+            app:destination="@id/cartFragment"
+            app:popUpTo="@id/cartFragment"
+            app:popUpToInclusive="false" />
+
+    </fragment>
 
 </navigation>
