@@ -12,10 +12,13 @@ pluginManagement {
     }
 }
 dependencyResolutionManagement {
+    // Можно оставить эту настройку
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
+        // Добавь gradlePluginPortal() если его нет, но обычно это не главное
+        gradlePluginPortal()
     }
 }
 

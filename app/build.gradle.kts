@@ -1,9 +1,9 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    //alias(libs.plugins.kotlin.kapt)
-    alias(libs.plugins.hilt)
-    alias(libs.plugins.ksp)
+    id("kotlin-parcelize")
+    id("kotlin-kapt") // ← ВОТ ТАК ДОЛЖНО БЫТЬ (id, а не kotlin)
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -29,10 +29,12 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -43,9 +45,16 @@ android {
 }
 
 dependencies {
-    implementation (libs.hilt.android)
-    ksp (libs.hilt.compiler)
+    // Hilt
+    implementation("com.google.dagger:hilt-android:2.48")
+    kapt("com.google.dagger:hilt-compiler:2.48")
 
+    // Room Database
+    implementation("androidx.room:room-runtime:2.6.0")
+    implementation("androidx.room:room-ktx:2.6.0")
+    kapt("androidx.room:room-compiler:2.6.0")  // ← Используем annotationProcessor
+
+    // Основные зависимости
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -54,18 +63,15 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.5")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.5")
     implementation("androidx.activity:activity-ktx:1.8.0")
-
-    implementation("com.google.code.gson:gson:2.13.2")
-    implementation("androidx.room:room-runtime:2.8.4")
-    implementation("androidx.room:room-ktx:2.8.4")
-    ksp("androidx.room:room-compiler:2.8.4")
-
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.10.0")
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
-
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
+
+    // Glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
