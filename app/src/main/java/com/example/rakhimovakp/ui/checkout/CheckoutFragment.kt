@@ -9,14 +9,20 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.rakhimovakp.R
 import com.example.rakhimovakp.data.models.Car
 import com.example.rakhimovakp.databinding.FragmentCheckoutBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.text.NumberFormat
 import java.util.Locale
+import kotlin.getValue
 
 @AndroidEntryPoint
 class CheckoutFragment : Fragment() {
@@ -46,16 +52,20 @@ class CheckoutFragment : Fragment() {
     }
 
     private fun setupCarInfo() {
-        val car = args.car
-        viewModel.updateCar(car)
+        val cars = args.cars
 
-        with(binding) {
-            tvCarBrandModel.text = "${car.brand} ${car.name}"
-            tvCarPrice.text = formatPrice(car.price)
-            tvCarDescription.text = car.description ?: ""
-            tvBasePrice.text = formatPrice(car.price)
-            tvTotalPrice.text = formatPrice(car.price)
+        cars.forEach { car ->
+            //viewModel.updateCar(car)
+
+            with(binding) {
+                tvCarBrandModel.text = "${car.carName}"
+//                tvCarPrice.text = formatPrice(car.carPrice)
+//                tvCarDescription.text = car.description ?: ""
+//                tvBasePrice.text = formatPrice(car.price)
+//                tvTotalPrice.text = formatPrice(car.price)
+            }
         }
+
     }
 
     private fun setupFormListeners() {
@@ -111,12 +121,17 @@ class CheckoutFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        viewModel.uiState.observe(viewLifecycleOwner) { state ->
-            with(binding) {
-                tvBasePrice.text = formatPrice(state.basePrice)
-                tvOptionsPrice.text = formatPrice(state.optionsPrice)
-                tvTotalPrice.text = formatPrice(state.totalPrice)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { state ->
+                    with(binding) {
+                        tvBasePrice.text = formatPrice(state.basePrice)
+                        tvOptionsPrice.text = formatPrice(state.optionsPrice)
+                        tvTotalPrice.text = formatPrice(state.totalPrice)
+                    }
+                }
             }
+
         }
     }
 

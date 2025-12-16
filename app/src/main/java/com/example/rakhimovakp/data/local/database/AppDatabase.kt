@@ -11,7 +11,7 @@ import com.example.rakhimovakp.data.local.dao.CartDao
 
 @Database(
     entities = [Car::class, CartItem::class],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {

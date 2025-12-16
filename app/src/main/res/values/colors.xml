@@ -7,4 +7,6 @@
     <color name="soft_stroke">#E2E8F0</color>
     <color name="accent_blue">#1E3A8A</color>
     <color name="accent_cyan">#1FB8FF</color>
+    <color name="light_background">#F8F9FA</color>
+    <color name="gray_600">#6C757D</color>
 </resources>

@@ -8,8 +8,8 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 @Entity(tableName = "cars")
 data class Car(
-    @PrimaryKey
-    val id: Long,
+    @PrimaryKey(autoGenerate = true) // <-- Ключевое изменение
+    val id: Long = 0, // При создании объекта передавайте 0
     val brand: String,
     val name: String,
     val price: Double,

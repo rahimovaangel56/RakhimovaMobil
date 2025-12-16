@@ -3,4 +3,5 @@
     <item android:color="@color/accent_blue" android:state_checked="true" />
     <item android:color="@color/charcoal" android:state_pressed="true" />
     <item android:color="#8A94A6" />
+
 </selector>

@@ -13,6 +13,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rakhimovakp.R
+import com.example.rakhimovakp.data.models.Car
 import com.example.rakhimovakp.databinding.FragmentCartBinding
 import com.example.rakhimovakp.ui.viewmodels.CartViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -69,11 +70,10 @@ class CartFragment : Fragment() {
         }
 
         binding.btnCheckout.setOnClickListener {
-            android.widget.Toast.makeText(
-                requireContext(),
-                "Оформление пока недоступно",
-                android.widget.Toast.LENGTH_SHORT
-            ).show()
+            val carItems = cartViewModel.items.value
+            val cartItemArray = carItems.toTypedArray()
+            val action = CartFragmentDirections.actionCartFragmentToCheckoutFragment(cars = cartItemArray)
+            findNavController().navigate(action)
         }
     }
 
