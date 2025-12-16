@@ -56,12 +56,11 @@ dependencies {
     // Room Database
     implementation("androidx.room:room-runtime:2.8.4")
     implementation("androidx.room:room-ktx:2.8.4")
-    kapt("androidx.room:room-compiler:2.8.4")  // ← Используем annotationProcessor
+    kapt("androidx.room:room-compiler:2.8.4")
 
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.10.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0")
 
-    // Основные зависимости
 
     implementation("androidx.core:core-ktx:1.17.0")
     implementation("androidx.appcompat:appcompat:1.7.1")
@@ -77,7 +76,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
     implementation("androidx.recyclerview:recyclerview:1.4.0")
 
-    // Glide
     implementation("com.github.bumptech.glide:glide:5.0.5")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
