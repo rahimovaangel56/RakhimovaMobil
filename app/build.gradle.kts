@@ -77,7 +77,7 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.4.0")
 
     implementation("com.github.bumptech.glide:glide:5.0.5")
-    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation("com.github.PhilJay:MPAndroidChart:3.1.0")
 
 
     testImplementation("junit:junit:4.13.2")

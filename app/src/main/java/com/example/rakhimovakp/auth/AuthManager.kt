@@ -1,10 +1,10 @@
 package com.example.rakhimovakp.auth
 
 import android.content.Context
-import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
+import androidx.core.content.edit
 
 class AuthManager(private val context: Context) {
 
@@ -52,9 +52,10 @@ class AuthManager(private val context: Context) {
 
     fun login(email: String, password: String, onResult: (LoginResult) -> Unit) {
         val user = mockUsers.find { it.email == email }
+        loadUserFromPrefs()
 
-        if (user != null && isValidPassword(password)) {
-            saveUserToPrefs(user)
+        if ((user != null || _currentUser.value != null) && isValidPassword(password)) {
+            saveUserToPrefs((user ?: _currentUser.value)!!)
             _currentUser.value = user
             onResult(LoginResult.Success)
         } else {
@@ -67,7 +68,7 @@ class AuthManager(private val context: Context) {
         password: String,
         phone: String,
         name: String,
-        onResult: (LoginResult) -> Unit
+        onResult: (LoginResult) -> Unit,
     ) {
         if (mockUsers.any { it.email == email }) {
             onResult(LoginResult.Error("Пользователь с таким email уже существует"))
@@ -89,7 +90,7 @@ class AuthManager(private val context: Context) {
     }
 
     fun logout() {
-        sharedPreferences.edit().clear().apply()
+        sharedPreferences.edit { clear() }
         _currentUser.value = null
     }
 
@@ -103,7 +104,7 @@ class AuthManager(private val context: Context) {
 
     private fun saveUserToPrefs(user: User) {
         val userJson = Gson().toJson(user)
-        sharedPreferences.edit().putString("current_user", userJson).apply()
+        sharedPreferences.edit { putString("current_user", userJson) }
     }
 
     private fun loadUserFromPrefs() {
@@ -126,7 +127,7 @@ data class User(
     val name: String = "",
     val role: UserRole,
     val dealershipId: String? = null,
-    val createdAt: Long
+    val createdAt: Long,
 )
 
 enum class UserRole {

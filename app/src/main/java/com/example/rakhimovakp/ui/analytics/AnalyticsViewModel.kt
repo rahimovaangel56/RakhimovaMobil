@@ -41,8 +41,8 @@ class AnalyticsViewModel @Inject constructor() : ViewModel() {
                     "Jaecoo" to 15f,
                     "Другие" to 5f
                 ),
-                totalRevenue = 98_700_000,
-                averageSale = 18_500_000,
+                totalRevenue = 98_700_000.toDouble(),
+                averageSale = 18_500_000.toDouble(),
                 topBrand = "Haval Jolion",
                 totalSales = 154
             )

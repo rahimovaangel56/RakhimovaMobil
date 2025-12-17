@@ -52,13 +52,13 @@ class CheckoutFragment : Fragment() {
     }
 
     private fun setupCarInfo() {
-        val cars = args.cars
+        val cars = args.carId
 
         cars.forEach { car ->
             //viewModel.updateCar(car)
 
             with(binding) {
-                tvCarBrandModel.text = "${car.carName}"
+//                tvCarBrandModel.text = "${car.carName}"
 //                tvCarPrice.text = formatPrice(car.carPrice)
 //                tvCarDescription.text = car.description ?: ""
 //                tvBasePrice.text = formatPrice(car.price)

@@ -71,8 +71,9 @@ class CartFragment : Fragment() {
 
         binding.btnCheckout.setOnClickListener {
             val carItems = cartViewModel.items.value
-            val cartItemArray = carItems.toTypedArray()
-            val action = CartFragmentDirections.actionCartFragmentToCheckoutFragment(cars = cartItemArray)
+            val action = CartFragmentDirections.actionCartFragmentToCheckoutFragment(
+                carId = carItems.map { it.carId }.toLongArray()
+            )
             findNavController().navigate(action)
         }
     }

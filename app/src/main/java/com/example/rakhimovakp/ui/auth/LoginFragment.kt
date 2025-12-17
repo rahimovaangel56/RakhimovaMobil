@@ -32,7 +32,6 @@ class LoginFragment : Fragment() {
         authManager = AuthManager(requireContext())
 
         setupClickListeners()
-        checkIfAlreadyLoggedIn()
         setupInputListeners()
     }
 
@@ -58,12 +57,6 @@ class LoginFragment : Fragment() {
 
         binding.passwordEditText.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) hideError()
-        }
-    }
-
-    private fun checkIfAlreadyLoggedIn() {
-        if (authManager.isLoggedIn()) {
-            navigateToMainScreen()
         }
     }
 

@@ -120,8 +120,7 @@
              Рекомендуется передавать ID или ключевые данные. -->
         <argument
             android:name="carId"
-            app:argType="long"
-            android:defaultValue="-1" />
+            app:argType="long[]"/>
 
         <!-- Действие назад в каталог после оформления -->
         <action
