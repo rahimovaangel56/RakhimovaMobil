@@ -48,6 +48,17 @@ class AddCarFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.user?.let { user ->
+            var brand = user.dealershipId?.takeWhile { it != '_' }
+            brand = try {
+                brand?.firstOrNull()?.uppercase() + brand?.drop(1)
+            } catch (_: Exception) {
+                null
+            }
+
+            binding.editTextBrand.setText(brand ?: "")
+        }
+
         setupClickListeners()
         setupObservers()
     }

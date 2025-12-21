@@ -2,6 +2,9 @@ package com.example.rakhimovakp.ui.catalog
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.rakhimovakp.auth.AuthManager
+import com.example.rakhimovakp.auth.UserRole
+import com.example.rakhimovakp.data.model.User
 import com.example.rakhimovakp.data.models.Car
 import com.example.rakhimovakp.data.repository.CarRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,11 +16,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddCarViewModel @Inject constructor(
-    private val carRepository: CarRepository
+    private val carRepository: CarRepository,
+    private val authManager: AuthManager
 ) : ViewModel() {
 
     private val _addCarState = MutableStateFlow<AddCarState>(AddCarState.Idle)
     val addCarState: StateFlow<AddCarState> = _addCarState.asStateFlow()
+
+    var user: User? = null
+
+    init {
+        user = authManager.currentUser.value
+    }
 
     fun addCar(brand: String, name: String, price: Double, description: String?, imageUrl: String?) {
         viewModelScope.launch {

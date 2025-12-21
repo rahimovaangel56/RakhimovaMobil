@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
             val addCarItem = menu.findItem(R.id.addCarFragment)
             addCarItem.isVisible = user?.role == UserRole.DEALER_MANAGER
 
-            val analyticsItem = menu.findItem(R.id.addCarFragment)
+            val analyticsItem = menu.findItem(R.id.analyticsFragment)
             analyticsItem.isVisible = user?.role == UserRole.ADMIN
         }
     }
