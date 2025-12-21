@@ -45,13 +45,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottomNavigation)
+        val menu = bottomNavigation.menu
         authManager.currentUser.observe(this) { user ->
             Log.e("Uer", "User is $user")
 
-            val menu = bottomNavigation.menu
-            val specialItem = menu.findItem(R.id.addCarFragment)
+            val addCarItem = menu.findItem(R.id.addCarFragment)
+            addCarItem.isVisible = user?.role == UserRole.DEALER_MANAGER
 
-            specialItem.isVisible = user?.role == UserRole.DEALER_MANAGER
+            val analyticsItem = menu.findItem(R.id.addCarFragment)
+            analyticsItem.isVisible = user?.role == UserRole.ADMIN
         }
     }
 
