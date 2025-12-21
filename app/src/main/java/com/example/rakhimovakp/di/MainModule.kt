@@ -1,6 +1,8 @@
 package com.example.rakhimovakp.di
 
 import android.content.Context
+import com.example.rakhimovakp.auth.AuthManager
+import com.example.rakhimovakp.data.local.dao.UserDao
 import com.example.rakhimovakp.data.local.database.AppDatabase
 import dagger.Module
 import dagger.Provides
@@ -27,4 +29,15 @@ object MainModule {
     @Singleton
     fun provideCartDao(appDatabase: AppDatabase) =
         appDatabase.cartDao()
+
+    @Provides
+    @Singleton
+    fun provideUserDao(appDatabase: AppDatabase) =
+        appDatabase.userDao()
+
+    @Provides
+    @Singleton
+    fun provideAuthManager(@ApplicationContext context: Context, userDao: UserDao) =
+        AuthManager(context, userDao)
+
 }

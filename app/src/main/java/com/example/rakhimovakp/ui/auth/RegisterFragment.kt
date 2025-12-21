@@ -5,17 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.rakhimovakp.R
 import com.example.rakhimovakp.auth.AuthManager
 import com.example.rakhimovakp.auth.LoginResult
 import com.example.rakhimovakp.databinding.FragmentRegisterBinding
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class RegisterFragment : Fragment() {
 
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
-    private lateinit var authManager: AuthManager
+    @Inject
+    lateinit var authManager: AuthManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,7 +36,6 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        authManager = AuthManager(requireContext())
         setupClickListeners()
         setupInputListeners()
     }
@@ -121,19 +127,24 @@ class RegisterFragment : Fragment() {
         binding.registerButton.isEnabled = false
         binding.loginTextView.isEnabled = false
 
-        authManager.register(email, password, phone, name) { result ->
-            binding.progressBar.visibility = View.GONE
-            binding.registerButton.isEnabled = true
-            binding.loginTextView.isEnabled = true
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+            authManager.register(email, password, phone, name) { result ->
 
-            when (result) {
-                is LoginResult.Success -> {
-                    showSuccess("Регистрация успешна!")
-                    findNavController().navigate(R.id.action_registerFragment_to_catalogFragment)
-                }
+                activity?.runOnUiThread {
+                    binding.progressBar.visibility = View.GONE
+                    binding.registerButton.isEnabled = true
+                    binding.loginTextView.isEnabled = true
 
-                is LoginResult.Error -> {
-                    showError(result.message)
+                    when (result) {
+                        is LoginResult.Success -> {
+                            showSuccess("Регистрация успешна!")
+                            findNavController().navigate(R.id.action_registerFragment_to_catalogFragment)
+                        }
+
+                        is LoginResult.Error -> {
+                            showError(result.message)
+                        }
+                    }
                 }
             }
         }

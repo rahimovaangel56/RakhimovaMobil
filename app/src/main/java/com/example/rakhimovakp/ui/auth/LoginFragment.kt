@@ -5,17 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.rakhimovakp.R
 import com.example.rakhimovakp.auth.AuthManager
 import com.example.rakhimovakp.auth.LoginResult
 import com.example.rakhimovakp.databinding.FragmentLoginBinding
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
-    private lateinit var authManager: AuthManager
+
+    @Inject
+    lateinit var authManager: AuthManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,8 +36,6 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        authManager = AuthManager(requireContext())
 
         setupClickListeners()
         setupInputListeners()
@@ -85,19 +91,24 @@ class LoginFragment : Fragment() {
         binding.loginButton.isEnabled = false
         binding.registerTextView.isEnabled = false
 
-        authManager.login(email, password) { result ->
-            binding.progressBar.visibility = View.GONE
-            binding.loginButton.isEnabled = true
-            binding.registerTextView.isEnabled = true
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+            authManager.login(email, password) { result ->
 
-            when (result) {
-                is LoginResult.Success -> {
-                    showSuccess("Вход выполнен!")
-                    navigateToMainScreen()
-                }
+                activity?.runOnUiThread {
+                    binding.progressBar.visibility = View.GONE
+                    binding.loginButton.isEnabled = true
+                    binding.registerTextView.isEnabled = true
 
-                is LoginResult.Error -> {
-                    showError(result.message)
+                    when (result) {
+                        is LoginResult.Success -> {
+                            showSuccess("Вход выполнен!")
+                            navigateToMainScreen()
+                        }
+
+                        is LoginResult.Error -> {
+                            showError(result.message)
+                        }
+                    }
                 }
             }
         }

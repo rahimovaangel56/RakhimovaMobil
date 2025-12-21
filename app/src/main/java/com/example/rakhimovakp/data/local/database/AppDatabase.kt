@@ -8,15 +8,18 @@ import com.example.rakhimovakp.data.models.Car
 import com.example.rakhimovakp.data.model.CartItem
 import com.example.rakhimovakp.data.local.dao.CarDao
 import com.example.rakhimovakp.data.local.dao.CartDao
+import com.example.rakhimovakp.data.local.dao.UserDao
+import com.example.rakhimovakp.data.model.User
 
 @Database(
-    entities = [Car::class, CartItem::class],
+    entities = [Car::class, CartItem::class, User::class],
     version = 3,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun carDao(): CarDao
     abstract fun cartDao(): CartDao
+    abstract fun userDao(): UserDao
 
     companion object {
         @Volatile
